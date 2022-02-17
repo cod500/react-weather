@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../styles/weather-styles.css';
 import weatherApi from '../data/weatherApi.js';
+import moment from 'moment';
 
 export default function Weather() {
 
     const [weather, setWeather] = useState([]);
     const [weatherValue, setWeatherValue] = useState("");
-    const [error, setError] = useState(false)
+    const [error, setError] = useState(false);
+    const newDate = moment().format("MMM Do YY");
 
 
     const handleWeatherResult = async () => {
         const response = await weatherApi(weatherValue);
-        if (response.cod == "404") {
+        if (response.cod === "404") {
             setError(true)
         } else {
-            console.log(response);
+            console.log(newDate)
             setWeather(response)
         }
     }
@@ -28,7 +30,7 @@ export default function Weather() {
                     <input type="text" className="search" placeholder="Search by city name" onChange={(e) => {
                         setWeatherValue(e.target.value)
                     }} />
-                    <button onClick={handleWeatherResult} class="btn">Submit</button>
+                    <button onClick={handleWeatherResult} className="btn">Submit</button>
                     {error ? <p className="error">Location not found</p> : null}
                 </div>
                 <section>
@@ -36,9 +38,9 @@ export default function Weather() {
                         <div className="icon">
                             <img src="" alt="" className="weather-icon" />
                         </div>
-                        {weather.length != 0 && error == false ? (<div className="location">
+                        {weather.length !== 0 && error === false ? (<div className="location">
                             <div className="city">{weather.name}, {weather.sys.country}</div>
-                            <div className="date">Tuesday, Feb 15 2022</div>
+                            <div className="date">{newDate}</div>
                             <div className="current">
                                 <div className="temp">Temp: {weather.main.temp} <span>°</span>F</div>
                                 <div className="weather">Weather: {weather.weather[0].main}</div>
