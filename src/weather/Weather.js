@@ -31,7 +31,7 @@ export default function Weather() {
                         setWeatherValue(e.target.value)
                     }} />
                     <button onClick={handleWeatherResult} className="btn">Submit</button>
-                    {error ? <p className="error">Location not found</p> : null}
+                    {error ? <p className="error">Location was not found</p> : null}
                 </div>
                 <section>
                     <div className="contaienr">
